@@ -2,7 +2,8 @@ import netmiko
 
 def ssh_connect(host, username, password):
     """
-    Establish SSH connection to a network switch.
+    Establish SSH connection to a network switch and return the connection object.
+    Caller is responsible for closing the connection.
     """
     try:
         switch = {
