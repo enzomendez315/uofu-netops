@@ -85,6 +85,7 @@ async def get_switch_vlan_ports(switch_ip: str, vlan_id: int):
 
     ### Returns:
     - **dict**: A JSON object containing:
+        - `switch_ip` **(str)**: The IP address of the switch.
         - `vlan_id` **(int)**: The requested VLAN ID.
         - `name` **(str)**: The VLAN name.
         - `ports` **(list[str])**: A list of ports assigned to the VLAN.
@@ -92,6 +93,7 @@ async def get_switch_vlan_ports(switch_ip: str, vlan_id: int):
     ### Example Response:
     ```json
     {
+        "switch_ip": "192.168.1.1",
         "vlan_id": 10,
         "name": "Data",
         "ports": ["Gi0/1", "Gi0/2", "Gi0/3"]
