@@ -1,4 +1,3 @@
-from urllib.parse import unquote
 from dotenv import load_dotenv
 import os
 
@@ -10,7 +9,7 @@ load_dotenv()
 username = os.getenv("MY_USERNAME")
 password = os.getenv("MY_PASSWORD")
 
-router = APIRouter(prefix="/switches")
+router = APIRouter(prefix="/api/v1/switches")
 
 @router.get("")
 async def get_switches():
@@ -87,12 +86,14 @@ async def get_switch_vlan_ports(switch_ip: str, vlan_id: int):
     ### Returns:
     - **dict**: A JSON object containing:
         - `vlan_id` **(int)**: The requested VLAN ID.
+        - `name` **(str)**: The VLAN name.
         - `ports` **(list[str])**: A list of ports assigned to the VLAN.
 
     ### Example Response:
     ```json
     {
         "vlan_id": 10,
+        "name": "Data",
         "ports": ["Gi0/1", "Gi0/2", "Gi0/3"]
     }
     ```

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.routers import switch
+from app.routers import switches
 
 app = FastAPI()
 
-app.include_router(switch.router)
+app.include_router(switches.router)
