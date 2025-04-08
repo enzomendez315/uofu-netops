@@ -119,4 +119,13 @@ def test_get_switch_vlan_ports_no_ports(mock_get_vlan_ports):
         "ports": []
     }
 
-# TODO: Create test for invalid vlan id
+
+@patch("app.services.switch_service.SwitchService.get_vlan_ports")
+def test_get_switch_vlan_ports_invalid_vlan(mock_get_vlan_ports):
+    """Test fetching VLAN ports for a non-existing VLAN"""
+    mock_get_vlan_ports.side_effect = Exception("VLAN not found")
+    
+    response = client.get("/api/v1/switches/192.168.1.1/vlans/10")
+
+    assert response.status_code == 404
+    assert response.json() == {"detail": "VLAN 10 not found on switch 192.168.1.1"}
