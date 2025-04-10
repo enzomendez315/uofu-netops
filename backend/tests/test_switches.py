@@ -12,11 +12,11 @@ def test_get_switch_vlans_success(mock_get_vlans):
         "vlans": [
             {
                 "vlan_id": 10,
-                "name": "Data"
+                "vlan_name": "Data"
             },
             {
                 "vlan_id": 20,
-                "name": "Voice"
+                "vlan_name": "Voice"
             }
         ]
     }
@@ -29,11 +29,11 @@ def test_get_switch_vlans_success(mock_get_vlans):
         "vlans": [
             {
                 "vlan_id": 10,
-                "name": "Data"
+                "vlan_name": "Data"
             },
             {
                 "vlan_id": 20,
-                "name": "Voice"
+                "vlan_name": "Voice"
             }
         ]
     }
@@ -47,7 +47,7 @@ def test_get_switch_vlans_invalid_ip(mock_get_vlans):
     response = client.get("/api/v1/switches/192.168.99.99/vlans")
 
     assert response.status_code == 404
-    assert response.json() == {"detail": "Switch not found"}
+    assert response.json() == {"detail": "Switch 192.168.99.99 not found"}
 
 
 @patch("app.services.switch_service.SwitchService.get_vlans")
@@ -73,7 +73,7 @@ def test_get_switch_vlan_ports_success(mock_get_vlan_ports):
     mock_get_vlan_ports.return_value = {
         "switch_ip": "192.168.1.1",
         "vlan_id": 10,
-        "name": "Data",
+        "vlan_name": "Data",
         "ports": ["Gi0/1", "Gi0/2", "Gi0/3"]
     }
     
@@ -83,7 +83,7 @@ def test_get_switch_vlan_ports_success(mock_get_vlan_ports):
     assert response.json() == {
         "switch_ip": "192.168.1.1",
         "vlan_id": 10,
-        "name": "Data",
+        "vlan_name": "Data",
         "ports": ["Gi0/1", "Gi0/2", "Gi0/3"]
     }
 
@@ -105,7 +105,7 @@ def test_get_switch_vlan_ports_no_ports(mock_get_vlan_ports):
     mock_get_vlan_ports.return_value = {
         "switch_ip": "192.168.1.1",
         "vlan_id": 10,
-        "name": "Data",
+        "vlan_name": "Data",
         "ports": []
     }
     
@@ -115,7 +115,7 @@ def test_get_switch_vlan_ports_no_ports(mock_get_vlan_ports):
     assert response.json() == {
         "switch_ip": "192.168.1.1",
         "vlan_id": 10,
-        "name": "Data",
+        "vlan_name": "Data",
         "ports": []
     }
 

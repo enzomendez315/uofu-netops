@@ -1,4 +1,5 @@
 from app.utils.ssh_client import ssh_connect
+from app.utils.parse_output import *
 
 class SwitchService:
 
@@ -7,11 +8,15 @@ class SwitchService:
         try:
             net_connect = ssh_connect(host, username, password)
             if net_connect:
-                output = net_connect.send_command("show vlan br")
+                output = net_connect.send_command("show vlan brief")
+                hostname_output = net_connect.send_command("show running-config | include hostname")
+                hostname = hostname_output.split()[1] if hostname_output.startswith("hostname") else None
                 net_connect.disconnect()
-                return output
+                parsed_output = parse_show_vlan_brief(host, output)
+                return parsed_output
             else:
-                return f"Authentication failed to host {host}"
+                #return f"Authentication failed to host {host}"
+                return {"detail": f"Switch {host} not found"}
         except Exception as e:
             print(f"Switch service failed to get the VLANs on {host}: {e}")
 

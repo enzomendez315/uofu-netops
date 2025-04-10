@@ -19,20 +19,20 @@ async def get_switches():
     ### Returns:
     - **dict**: A JSON object containing:
         - `switches` **(list[dict])**: A list of switches, where each switch object includes:
-            - `ip` **(str)**: The IP address of the switch.
-            - `hostname` **(str)**: The hostname of the switch.
+            - `switch_ip` **(str)**: The IP address of the switch.
+            - `switch_name` **(str)**: The hostname of the switch.
 
     ### Example Response:
     ```json
     {
         "switches": [
             {
-                "ip": "192.168.1.1",
-                "hostname": "Switch-1"
+                "switch_ip": "192.168.1.1",
+                "switch_name": "Switch-1"
             },
             {
-                "ip": "192.168.1.2",
-                "hostname": "Switch-2"
+                "switch_ip": "192.168.1.2",
+                "switch_name": "Switch-2"
             }
         ]
     }
@@ -51,22 +51,24 @@ async def get_switch_vlans(switch_ip: str):
     ### Returns:
     - **dict**: A JSON object containing:
         - `switch_ip` **(str)**: The IP address of the switch.
+        - `switch_name` **(str)**: The hostname of the switch.
         - `vlans` **(list[dict])**: A list of VLANs, where each VLAN object includes:
             - `vlan_id` **(int)**: The VLAN ID.
-            - `name` **(str)**: The VLAN name.
+            - `vlan_name` **(str)**: The VLAN name.
 
     ### Example Response:
     ```json
     {
         "switch_ip": "192.168.1.1",
+        "switch_name": "Switch-1",
         "vlans": [
             {
                 "vlan_id": 10,
-                "name": "Data"
+                "vlan_name": "Data"
             },
             {
                 "vlan_id": 20,
-                "name": "Voice"
+                "vlan_name": "Voice"
             }
         ]
     }
@@ -86,16 +88,18 @@ async def get_switch_vlan_ports(switch_ip: str, vlan_id: int):
     ### Returns:
     - **dict**: A JSON object containing:
         - `switch_ip` **(str)**: The IP address of the switch.
+        - `switch_name` **(str)**: The hostname of the switch.
         - `vlan_id` **(int)**: The requested VLAN ID.
-        - `name` **(str)**: The VLAN name.
+        - `vlan_name` **(str)**: The VLAN name.
         - `ports` **(list[str])**: A list of ports assigned to the VLAN.
 
     ### Example Response:
     ```json
     {
         "switch_ip": "192.168.1.1",
+        "switch_name": "Switch-1",
         "vlan_id": 10,
-        "name": "Data",
+        "vlan_name": "Data",
         "ports": ["Gi0/1", "Gi0/2", "Gi0/3"]
     }
     ```
@@ -113,6 +117,7 @@ async def get_switch_ports(switch_ip: str):
     ### Returns:
     - **dict**: A JSON object containing:
         - `switch_ip` **(str)**: The IP address of the switch.
+        - `switch_name` **(str)**: The hostname of the switch.
         - `ports` **(list[dict])**: A list of ports, where each port object includes:
             - `port_id` **(str)**: The port identifier (e.g., "Gi0/1").
             - `status` **(str)**: The operational status of the port (e.g., "up", "down").
@@ -121,6 +126,7 @@ async def get_switch_ports(switch_ip: str):
     ```json
     {
         "switch_ip": "192.168.1.1",
+        "switch_name": "Switch-1",
         "ports": [
             {
                 "port_id": "Gi0/1",
@@ -147,6 +153,8 @@ async def get_switch_port_config(switch_ip: str, port_id: str):
 
     ### Returns:
     - **dict**: A JSON object containing:
+        - `switch_ip` **(str)**: The IP address of the switch.
+        - `switch_name` **(str)**: The hostname of the switch.
         - `port_id` **(str)**: The requested port ID.
         - `mode` **(str)**: The port mode (e.g., "access", "trunk").
         - `vlan` **(int, optional)**: The VLAN assigned to the port (if applicable).
@@ -155,6 +163,8 @@ async def get_switch_port_config(switch_ip: str, port_id: str):
     ### Example Response:
     ```json
     {
+        "switch_ip": "192.168.1.1",
+        "switch_name": "Switch-1",
         "port_id": "Gi0/1",
         "mode": "access",
         "vlan": 10,
@@ -176,6 +186,8 @@ async def get_switch_port_status(switch_ip: str, port_id: str):
 
     ### Returns:
     - **dict**: A JSON object containing:
+        - `switch_ip` **(str)**: The IP address of the switch.
+        - `switch_name` **(str)**: The hostname of the switch.
         - `port_id` **(str)**: The requested port ID.
         - `status` **(str)**: The current operational status of the port (e.g., "up", "down").
         - `last_change` **(str, optional)**: The timestamp of the last status change.
@@ -183,6 +195,8 @@ async def get_switch_port_status(switch_ip: str, port_id: str):
     ### Example Response:
     ```json
     {
+        "switch_ip": "192.168.1.1",
+        "switch_name": "Switch-1",
         "port_id": "Gi0/1",
         "status": "up",
         "last_change": "2025-04-01T12:30:00Z"
