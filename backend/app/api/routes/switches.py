@@ -1,7 +1,8 @@
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
 from fastapi import APIRouter
+
 from app.services.switch_service import SwitchService
 
 # FOR TESTING
