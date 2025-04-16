@@ -9,9 +9,9 @@ load_dotenv()
 username = os.getenv("MY_USERNAME")
 password = os.getenv("MY_PASSWORD")
 
-router = APIRouter(prefix="/api/v1/switches")
+router = APIRouter(prefix="/switches", tags=["switches"])
 
-@router.get("")
+@router.get("/")
 async def get_switches():
     """
     Retrieve all switches from the database.
