@@ -1,14 +1,11 @@
-import os
-from dotenv import load_dotenv
-
 from fastapi import APIRouter
 
+from app.core.config import settings
 from app.service.switch_service import SwitchService
 
 # FOR TESTING
-load_dotenv()
-username = os.getenv("MY_USERNAME")
-password = os.getenv("MY_PASSWORD")
+username = settings.FIRST_SUPERUSER_UID
+password = settings.FIRST_SUPERUSER_PASSWORD
 
 router = APIRouter(prefix="/switches", tags=["switches"])
 
