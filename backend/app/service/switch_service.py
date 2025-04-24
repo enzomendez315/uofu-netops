@@ -1,5 +1,5 @@
+from app.utils.parse_output import parse_show_vlan_brief
 from app.utils.ssh_client import ssh_connect
-from app.utils.parse_output import *
 
 class SwitchService:
 
