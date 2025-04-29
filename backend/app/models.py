@@ -49,6 +49,16 @@ class User(UserBase, table=True):
     hashed_password: str
 
 
+# Properties to return via API, id is always required
+class UserPublic(UserBase):
+    id: uuid.UUID
+
+
+class UsersPublic(SQLModel):
+    data: list[UserPublic]
+    count: int
+
+
 class Switch(SQLModel, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str = Field(index=True)
@@ -73,3 +83,29 @@ class Port(SQLModel, table=True):
     vlan_id: int = Field(foreign_key="vlan.id")
     switch: Optional[Switch] = Relationship(back_populates="ports")
     vlan: Optional[Vlan] = Relationship(back_populates="ports")
+
+
+class EmailData(SQLModel):
+    html_content: str
+    subject: str
+
+
+# Generic message
+class Message(SQLModel):
+    message: str
+
+
+# JSON payload containing access token
+class Token(SQLModel):
+    access_token: str
+    token_type: str = "Bearer"
+
+
+# Contents of JWT token
+class TokenPayload(SQLModel):
+    sub: str | None = None
+
+
+class NewPassword(SQLModel):
+    token: str
+    new_password: str = Field(min_length=8, max_length=40)
