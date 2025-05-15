@@ -1,4 +1,4 @@
-from app.utils.parse_output import parse_show_vlan_brief
+from app.utils.parse_output import parse_show_vlan_brief, parse_show_vlan_id
 from app.utils.ssh_client import ssh_connect
 
 class SwitchService:
@@ -12,7 +12,7 @@ class SwitchService:
                 hostname_output = net_connect.send_command("show running-config | include hostname")
                 hostname = hostname_output.split()[1] if hostname_output.startswith("hostname") else None
                 net_connect.disconnect()
-                parsed_output = parse_show_vlan_brief(host, output)
+                parsed_output = parse_show_vlan_brief(host, hostname, output)
                 return parsed_output
             else:
                 #return f"Authentication failed to host {host}"
@@ -26,10 +26,13 @@ class SwitchService:
             net_connect = ssh_connect(host, username, password)
             if net_connect:
                 output = net_connect.send_command(f"show vlan id {vlan_id}")
+                hostname_output = net_connect.send_command("show running-config | include hostname")
+                hostname = hostname_output.split()[1] if hostname_output.startswith("hostname") else None
                 net_connect.disconnect()
-                return output
+                parsed_output = parse_show_vlan_id(host, hostname, vlan_id, output)
+                return parsed_output
             else:
-                return f"Authentication failed to host {host}"
+                return {"detail": f"Switch {host} not found"}
         except Exception as e:
             print(f"Switch service failed to get the ports on VLAN {vlan_id} on {host}: {e}")
 
