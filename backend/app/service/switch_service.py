@@ -1,4 +1,8 @@
-from app.utils.parse_output import parse_show_vlan_brief, parse_show_vlan_id
+from app.utils.parse_output import (
+    parse_show_interface_status,
+    parse_show_vlan_brief, 
+    parse_show_vlan_id
+)
 from app.utils.ssh_client import ssh_connect
 
 class SwitchService:
@@ -41,11 +45,14 @@ class SwitchService:
         try:
             net_connect = ssh_connect(host, username, password)
             if net_connect:
-                output = net_connect.send_command(f"show int status")
+                output = net_connect.send_command(f"show interface status")
+                hostname_output = net_connect.send_command("show running-config | include hostname")
+                hostname = hostname_output.split()[1] if hostname_output.startswith("hostname") else None
                 net_connect.disconnect()
-                return output
+                parsed_output = parse_show_interface_status(host, hostname, output)
+                return parsed_output
             else:
-                return f"Authentication failed to host {host}"
+                return {"detail": f"Switch {host} not found"}
         except Exception as e:
             print(f"Switch service failed to get the ports' status on {host}: {e}")
 
@@ -58,7 +65,7 @@ class SwitchService:
                 net_connect.disconnect()
                 return output
             else:
-                return f"Authentication failed to host {host}"
+                return {"detail": f"Switch {host} not found"}
         except Exception as e:
             print(f"Switch service failed to get the port's ({port}) configuration on {host}: {e}")
 
@@ -67,10 +74,10 @@ class SwitchService:
         try:
             net_connect = ssh_connect(host, username, password)
             if net_connect:
-                output = net_connect.send_command(f"show int status | i {port}")
+                output = net_connect.send_command(f"show interface status | i {port}")
                 net_connect.disconnect()
                 return output
             else:
-                return f"Authentication failed to host {host}"
+                return {"detail": f"Switch {host} not found"}
         except Exception as e:
             print(f"Switch service failed to get the port's ({port}) configuration on {host}: {e}")

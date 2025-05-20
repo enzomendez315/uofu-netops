@@ -118,7 +118,8 @@ async def get_switch_ports(switch_ip: str):
         - `switch_name` **(str)**: The hostname of the switch.
         - `ports` **(list[dict])**: A list of ports, where each port object includes:
             - `port_id` **(str)**: The port identifier (e.g., "Gi0/1").
-            - `status` **(str)**: The operational status of the port (e.g., "up", "down").
+            - `vlan_id` **(int)**: The VLAN assigned to the port (if applicable).
+            - `status` **(str)**: The operational status of the port (e.g., "connected", "notconnect").
 
     ### Example Response:
     ```json
@@ -128,11 +129,13 @@ async def get_switch_ports(switch_ip: str):
         "ports": [
             {
                 "port_id": "Gi0/1",
-                "status": "up"
+                "vlan_id": 10,
+                "status": "connected"
             },
             {
                 "port_id": "Gi0/2",
-                "status": "down"
+                "vlan_id": 15,
+                "status": "notconnect"
             }
         ]
     }
@@ -155,7 +158,7 @@ async def get_switch_port_config(switch_ip: str, port_id: str):
         - `switch_name` **(str)**: The hostname of the switch.
         - `port_id` **(str)**: The requested port ID.
         - `mode` **(str)**: The port mode (e.g., "access", "trunk").
-        - `vlan` **(int, optional)**: The VLAN assigned to the port (if applicable).
+        - `vlan_id` **(int, optional)**: The VLAN assigned to the port (if applicable).
         - `status` **(str)**: The administrative status of the port.
 
     ### Example Response:
@@ -165,7 +168,7 @@ async def get_switch_port_config(switch_ip: str, port_id: str):
         "switch_name": "Switch-1",
         "port_id": "Gi0/1",
         "mode": "access",
-        "vlan": 10,
+        "vlan_id": 10,
         "status": "up"
     }
     ```
