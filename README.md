@@ -11,7 +11,7 @@ Before running this project locally, ensure you have the following installed:
 2. Open the `backend` directory in your preferred IDE.
 3. (Optional) Create and activate a virtual environment by running `python3.9 -m venv venv` and `source venv/bin/activate`. 
 4. Install dependencies with `pip install -r requirements.txt`.
-5. Create a .env file in the backend/ directory with all the needed variables.
+5. Create a .env file in the `backend` directory with all the needed variables.
 6. Run `uvicorn app.main:app --reload` to start the backend server.
 
 ### Frontend Setup
