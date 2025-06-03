@@ -1,7 +1,7 @@
 ## Prerequisites
 Before running this project locally, ensure you have the following installed:
 
-* Python 3.9 and pip
+* Python 3.9 and pip (Python Package Manager)
 * Node.js and npm (Node Package Manager)
 * IDE or code editor (PyCharm, VS Code, etc.)
 
